@@ -20,36 +20,54 @@ const Header = () => {
   return (
     <header className="relative">
       <Carousel />
+      <nav className="absolute top-0 left-0 w-full p-4 bg-opacity-50 flex justify-between items-center">
+        {/* Logo */}
+        <img src="path/to/logo.png" alt="Logo" className="h-8" />
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white">
-        <h1 className="text-5xl font-bold">CAPTURING LOVE</h1>
-        <p className="text-xl mt-2">FREEZING A MOMENT</p>
-      </div>
-
-      <nav className="absolute top-0 left-0 w-full p-4 bg-black bg-opacity-50 lg:bg-transparent flex justify-between items-center">
+        {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-6 text-white text-lg">
           <NavLinks className="hover:underline" />
         </div>
 
-        <div className="lg:hidden">
-          <button
-            type="button"
-            className="text-white focus:outline-none"
-            onClick={toggleMobileMenu}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            Menu
-          </button>
-          {isMobileMenuOpen && (
-            <div
-              id="mobile-menu"
-              className="absolute right-0 mt-2 bg-black bg-opacity-90 text-white flex flex-col space-y-4 p-4 rounded"
+        {/* Mobile Menu Icon */}
+        <button
+          type="button"
+          className="lg:hidden text-white focus:outline-none"
+          onClick={toggleMobileMenu}
+          aria-expanded={isMobileMenuOpen}
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6"
             >
-              <NavLinks className="hover:underline" />
-            </div>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
           )}
-        </div>
+        </button>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="absolute top-full left-0 w-full bg-black bg-opacity-90 text-white flex flex-col space-y-4 p-4 lg:hidden">
+            <NavLinks className="hover:underline" />
+          </div>
+        )}
       </nav>
     </header>
   );
