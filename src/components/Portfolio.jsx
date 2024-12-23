@@ -13,14 +13,42 @@ const Portfolio = () => {
       <div className="container mx-auto text-center mb-8">
         <h2 className="text-3xl font-bold">PORTFOLIO</h2>
       </div>
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
-        <div className="md:col-span-2">
-          <img src={images[0]} alt="Portfolio 1" className="w-full h-auto rounded-lg shadow-lg" />
+      <div className="container mx-auto flex flex-col md:flex-row gap-4 px-4">
+        <div className="flex-1 relative group">
+          <img
+            src={images[0]}
+            alt="Portfolio 1"
+            className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div className="grid grid-cols-1 gap-4">
-          <img src={images[1]} alt="Portfolio 2" className="w-full h-auto rounded-lg shadow-lg" />
-          <img src={images[2]} alt="Portfolio 3" className="w-full h-auto rounded-lg shadow-lg" />
-          <img src={images[3]} alt="Portfolio 4" className="w-full h-auto rounded-lg shadow-lg" />
+        <div className="flex flex-col flex-1 gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative group w-full md:w-1/2">
+              <img
+                src={images[1]}
+                alt="Portfolio 2"
+                className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div className="relative group w-full md:w-1/2">
+              <img
+                src={images[2]}
+                alt="Portfolio 3"
+                className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+          </div>
+          <div className="relative group">
+            <img
+              src={images[3]}
+              alt="Portfolio 4"
+              className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
         </div>
       </div>
     </section>

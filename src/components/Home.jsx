@@ -6,21 +6,23 @@ import Services from "./Services"
 import AboutMe from "./AboutMe"
 import Portfolio from "./Portfolio";
 import AdditionalPortfolio from "./AdditionalPortfolio"
+import ServicePortfolio from "./Gallery"
 const Home = () => {
   return (
     <div>
-      <header className="relative">
+      {/* <header className="relative"> */}
         {/* <Carousel /> */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white">
+        {/* <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white">
           <h1 className="text-5xl font-bold">CAPTURING LOVE</h1>
           <p className="text-xl mt-2">FREEZING A MOMENT</p>
         </div>
-      </header>
+      </header> */}
 
       <Services />
       <AboutMe />
       <Portfolio />
       <AdditionalPortfolio />
+      <ServicePortfolio/>
       <ReviewSlider />
 
       <Footer />

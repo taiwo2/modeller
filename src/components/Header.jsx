@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Carousel from "./Carousel";
 
 const NavLinks = ({ className }) => (
   <>
@@ -11,64 +10,102 @@ const NavLinks = ({ className }) => (
 );
 
 const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <header className="relative">
-      <Carousel />
-      <nav className="absolute top-0 left-0 w-full p-4 bg-opacity-50 flex justify-between items-center">
-        {/* Logo */}
-        <img src="path/to/logo.png" alt="Logo" className="h-8" />
-
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex space-x-6 text-white text-lg">
-          <NavLinks className="hover:underline" />
+    <header className="bg-gradient-to-r from-pink-100 to-pink-200 py-4">
+      <div className="container mx-auto px-4">
+        {/* Mobile Menu Icon */}
+        <div className="flex justify-between items-center md:hidden">
+          <button
+            className="text-black focus:outline-none"
+            onClick={toggleMenu}
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            )}
+          </button>
+          <img src="path/to/logo.png" alt="Logo" className="h-16" />
         </div>
 
-        {/* Mobile Menu Icon */}
-        <button
-          type="button"
-          className="lg:hidden text-white focus:outline-none"
-          onClick={toggleMobileMenu}
-          aria-expanded={isMobileMenuOpen}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-          )}
-        </button>
+        {/* Logo and Menu Icon for Desktop */}
+        <div className="hidden md:flex justify-between items-center">
+          <img src="path/to/logo.png" alt="Logo" className="h-16" />
+          <button
+            className="text-black focus:outline-none"
+            onClick={toggleMenu}
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            )}
+          </button>
+        </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-black bg-opacity-90 text-white flex flex-col space-y-4 p-4 lg:hidden">
-            <NavLinks className="hover:underline" />
+        {/* Centered Text and Buttons */}
+        <div className="text-center mt-4">
+          <p className="text-lg font-semibold">Expert At Creating The Most Exquisite Makeup Experiences</p>
+          <p className="text-sm italic">Experience the Difference!</p>
+          <div className="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-4 mt-2">
+            <button className="bg-black text-white py-2 px-4 rounded-full">BOOK US</button>
+            <button className="bg-black text-white py-2 px-4 rounded-full">SHOP PRODUCTS</button>
           </div>
-        )}
-      </nav>
+        </div>
+      </div>
+
+      {/* Navigation Links */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 bg-white bg-opacity-90 flex flex-col items-center justify-center space-y-4 p-4">
+          <NavLinks className="hover:underline text-black" />
+        </div>
+      )}
     </header>
   );
 };

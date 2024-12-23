@@ -10,7 +10,7 @@ import Home from "./components/Home";
 const App = () => {
   return (
     <Router>
-      <div className="relative bg-black min-h-screen">
+      <div className="relative bg-white min-h-screen">
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
