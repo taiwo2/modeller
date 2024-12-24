@@ -46,15 +46,22 @@ const services = [
 ];
 
 const ServiceCard = ({ service }) => (
-  <div className="bg-pink-100 p-6 rounded-lg shadow-lg">
-    <img src={service.image} alt={service.title} className="w-32 h-32 rounded-full mx-auto mb-4" />
-    <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-    <p className="mb-4">{service.description}</p>
-    <p className="mb-2">{service.duration}</p>
-    <p className="mb-4">{service.price}</p>
+  <div className="bg-pink-100 p-6 rounded-lg shadow-lg text-center">
+    <img src={service.image} alt={service.title} className="w-32 h-32 rounded-full mx-auto mb-4 object-cover" />
+    
+    {/* Use flexbox to align text items */}
+    <div className="flex flex-col items-center">
+      <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+      <p className="mb-4">{service.description}</p>
+      <p className="mb-2">{service.duration}</p>
+      <p className="mb-4">{service.price}</p>
+    </div>
+    
     <button className="bg-black text-white py-2 px-4 rounded">Book Now</button>
   </div>
 );
+
+
 
 const Services = () => {
   return (
