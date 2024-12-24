@@ -1,4 +1,29 @@
 import React from "react";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
+
+const PortfolioImage = ({ src, alt, index }) => {
+  const [ref, inView] = useInView({
+    threshold: 0.2,
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      className="relative group h-full"
+    >
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    </motion.div>
+  );
+};
 
 const ServicePortfolio = () => {
   const images = [
@@ -11,44 +36,24 @@ const ServicePortfolio = () => {
   return (
     <section className="py-16 bg-gradient-to-b from-gray-100 to-white">
       <div className="container mx-auto flex flex-col md:flex-row gap-4 px-4">
-        <div className="flex-1 relative group">
-          <img
-            src={images[0]}
-            alt="Portfolio 1"
-            className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
-          />
-        <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      </div>
-      <div className="flex flex-col flex-1 gap-4">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="relative group w-full md:w-1/2">
-            <img
-              src={images[1]}
-              alt="Portfolio 2"
-              className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="flex flex-col flex-1 gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="w-full md:w-1/2">
+              <PortfolioImage src={images[1]} alt="Portfolio 2" index={1} />
+            </div>
+            <div className="w-full md:w-1/2">
+              <PortfolioImage src={images[2]} alt="Portfolio 3" index={2} />
+            </div>
           </div>
-          <div className="relative group w-full md:w-1/2">
-            <img
-              src={images[2]}
-              alt="Portfolio 3"
-              className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div>
+            <PortfolioImage src={images[3]} alt="Portfolio 4" index={3} />
           </div>
         </div>
-        <div className="relative group">
-          <img
-            src={images[3]}
-            alt="Portfolio 4"
-            className="w-full h-full object-cover rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="flex-1">
+          <PortfolioImage src={images[0]} alt="Portfolio 1" index={0} />
         </div>
       </div>
-    </div>
-  </section>
+    </section>
   );
 };
 

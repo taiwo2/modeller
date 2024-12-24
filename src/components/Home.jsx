@@ -7,6 +7,8 @@ import AboutMe from "./AboutMe"
 import Portfolio from "./Portfolio";
 import AdditionalPortfolio from "./AdditionalPortfolio"
 import ServicePortfolio from "./Gallery"
+import Servicess from  './Booking'
+import ScrollToTop from './ScrollToTop';
 const Home = () => {
   return (
     <div>
@@ -23,9 +25,10 @@ const Home = () => {
       <Portfolio />
       <AdditionalPortfolio />
       <ServicePortfolio/>
-      <ReviewSlider />
-
+      {/* <ReviewSlider /> */}
+{/* <Servicess /> */}
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

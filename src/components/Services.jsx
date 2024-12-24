@@ -1,4 +1,6 @@
 import React from "react";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -45,23 +47,37 @@ const services = [
   },
 ];
 
-const ServiceCard = ({ service }) => (
-  <div className="bg-pink-100 p-6 rounded-lg shadow-lg text-center">
-    <img src={service.image} alt={service.title} className="w-32 h-32 rounded-full mx-auto mb-4 object-cover" />
-    
-    {/* Use flexbox to align text items */}
-    <div className="flex flex-col items-center">
-      <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-      <p className="mb-4">{service.description}</p>
-      <p className="mb-2">{service.duration}</p>
-      <p className="mb-4">{service.price}</p>
-    </div>
-    
-    <button className="bg-black text-white py-2 px-4 rounded">Book Now</button>
-  </div>
-);
+const ServiceCard = ({ service, index }) => {
+  const [ref, inView] = useInView({
+    threshold: 0.2,
+    // triggerOnce: true,
+  });
 
-
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      className="bg-pink-100 p-6 rounded-lg shadow-lg text-center"
+    >
+      <img
+        src={service.image}
+        alt={service.title}
+        className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+      />
+      
+      <div className="flex flex-col items-center">
+        <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+        <p className="mb-4">{service.description}</p>
+        <p className="mb-2">{service.duration}</p>
+        <p className="mb-4">{service.price}</p>
+      </div>
+      
+      <button className="bg-black text-white py-2 px-4 rounded">Book Now</button>
+    </motion.div>
+  );
+};
 
 const Services = () => {
   return (
@@ -71,7 +87,7 @@ const Services = () => {
       </div>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {services.map((service, index) => (
-          <ServiceCard key={index} service={service} />
+          <ServiceCard key={index} service={service} index={index} />
         ))}
       </div>
     </section>
