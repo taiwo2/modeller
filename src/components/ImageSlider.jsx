@@ -1,12 +1,13 @@
 // ImageSlider.jsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { FaExpand, FaCompress } from 'react-icons/fa';
 
 const ImageSlider = ({ images }) => {
   const { imageIndex } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [direction, setDirection] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
@@ -15,18 +16,18 @@ const ImageSlider = ({ images }) => {
   const slideVariants = {
     enter: (direction) => ({
       x: direction > 0 ? 1000 : -1000,
-      opacity: 0
+      opacity: 0,
     }),
     center: {
       zIndex: 1,
       x: 0,
-      opacity: 1
+      opacity: 1,
     },
     exit: (direction) => ({
       zIndex: 0,
       x: direction < 0 ? 1000 : -1000,
-      opacity: 0
-    })
+      opacity: 0,
+    }),
   };
 
   const swipeConfidenceThreshold = 10000;
@@ -36,12 +37,12 @@ const ImageSlider = ({ images }) => {
 
   const paginate = (newDirection) => {
     const newIndex = (currentIndex + newDirection + images.length) % images.length;
-    navigate(`/portfolio/${newIndex}`);
+    navigate(`/${location.pathname.split('/')[1]}/${newIndex}`);
     setDirection(newDirection);
   };
 
   const closeSlider = () => {
-    navigate('/portfolio');
+    navigate(`/${location.pathname.split('/')[1]}`);
   };
 
   const toggleFullScreen = () => {
@@ -66,7 +67,7 @@ const ImageSlider = ({ images }) => {
 
       <button
         onClick={toggleFullScreen}
-        className="absolute top-4 left-4 text-black text-2xl z-60"
+        className="absolute top-4 left-4 text-black text-2xl z-60 hidden md:block"
       >
         {isFullScreen ? <FaCompress /> : <FaExpand />}
       </button>
@@ -85,7 +86,7 @@ const ImageSlider = ({ images }) => {
             exit="exit"
             transition={{
               x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 }
+              opacity: { duration: 0.2 },
             }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
@@ -99,11 +100,10 @@ const ImageSlider = ({ images }) => {
                 paginate(-1);
               }
             }}
-            className="absolute w-full h-full object-contain"
+            className="absolute w-full h-full object-contain max-w-[80%] sm:max-w-[60%] md:max-w-[50%] mx-auto"
           />
         </AnimatePresence>
 
-        {/* Show the left arrow only if not on the first image */}
         {currentIndex > 0 && (
           <div 
             onClick={() => paginate(-1)} 
@@ -113,7 +113,6 @@ const ImageSlider = ({ images }) => {
           </div>
         )}
 
-        {/* Show the right arrow only if not on the last image */}
         {currentIndex < images.length - 1 && (
           <div 
             onClick={() => paginate(1)} 

@@ -5,10 +5,11 @@ import ReviewSlider from "../pages/ReviewSlider"
 import Services from "./Services"
 import AboutMe from "./AboutMe"
 import Portfolio from "./Portfolio";
-import AdditionalPortfolio from "./AdditionalPortfolio"
-import ServicePortfolio from "./Gallery"
+import Portfolio4 from "./AdditionalPortfolio"
+import Portfolio2 from "./Gallery"
 import Servicess from  './Booking'
 import ScrollToTop from './ScrollToTop';
+import Portfolio3 from "./Portfolio3"
 const Home = () => {
   return (
     <div>
@@ -23,8 +24,9 @@ const Home = () => {
       <Services />
       <AboutMe />
       <Portfolio />
-      <AdditionalPortfolio />
-      <ServicePortfolio/>
+      <Portfolio2/>
+      <Portfolio3 />
+      <Portfolio4 />
       {/* <ReviewSlider /> */}
 {/* <Servicess /> */}
       <Footer />
