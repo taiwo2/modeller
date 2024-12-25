@@ -41,12 +41,6 @@ export const images = [
 ];
 const Portfolio = () => {
 
-
-  const [titleRef, titleInView] = useInView({
-    threshold: 0.2,
-    // triggerOnce: true,
-  });
-
   return (
     <section className="pb-4 bg-gradient-to-b from-gray-100 to-white">
       <div className="container mx-auto flex flex-col md:flex-row gap-4 px-4">
@@ -67,6 +61,11 @@ const Portfolio = () => {
           <PortfolioImage src={images[0]} alt="Portfolio 1" index={0} portfolioType="portfolio4" />
         </div>
       </div>
+      <div className="w-full h-[300px] flex justify-center items-center mt-8">
+  <button className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors duration-300">
+    Book a Service
+  </button>
+</div>
     </section>
   );
 };

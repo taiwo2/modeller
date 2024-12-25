@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gradient-to-r from-pink-100 to-pink-200 py-4">
+    <header className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-4">
       <div className="container mx-auto px-4">
         {/* Mobile View: Menu Icon on the Right */}
         <div className="flex justify-end md:hidden">
