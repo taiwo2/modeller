@@ -1,8 +1,17 @@
 // Booking.jsx
-import React from "react";
+import React,{useState} from "react";
 import { FaBars, FaChevronDown } from 'react-icons/fa';
+import Modal from './Modal';
+import ConfirmationModal from './ConfirmationModal';
+
 
 const Booking = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [initialService, setInitialService] = useState(null);
+
+
+
   const services = [
     {
       title: "PICTURE-PERFECT GLAM (IN-STUDIO)",
@@ -48,6 +57,18 @@ const Booking = () => {
     },
   ];
 
+  const handleBookNowClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseClick = () => {
+    setIsConfirmationOpen(true);
+  };
+
+  const handleLeaveBooking = () => {
+    setIsConfirmationOpen(false);
+    setIsModalOpen(false);
+  };
   return (
     <section className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-16">
       <div className="container mx-auto text-center mb-8 flex justify-between items-center">
@@ -66,12 +87,21 @@ const Booking = () => {
             <p className="text-gray-200 mb-4">{service.description}</p>
             <p className="text-gray-100 font-bold">{service.duration}</p>
             <p className="text-gray-100 font-bold mb-4">{service.price}</p>
-            <button className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors duration-300">
+            <button
+              onClick={handleBookNowClick}
+              className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors duration-300"
+            >
               Book Now
             </button>
           </div>
         ))}
       </div>
+      <Modal isOpen={isModalOpen} onClose={handleCloseClick} initialService={initialService} services={services}/>
+      <ConfirmationModal
+        isOpen={isConfirmationOpen}
+        onClose={() => setIsConfirmationOpen(false)}
+        onLeave={handleLeaveBooking}
+      />
     </section>
   );
 };
