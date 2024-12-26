@@ -9,6 +9,8 @@ import Portfolio4 from "./components/AdditionalPortfolio";
 import Portfolio3 from "./components/Portfolio3";
 import Home from "./components/Home";
 import ImageSlider from './components/ImageSlider';
+import ScheduleAppointment from './components/ScheduleAppointment'; // Import the new component
+import BeautyServices from './components/BeautyServices';
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
           <Route path="/portfolio/:imageIndex" element={<ImageSlider portfolioType="portfolio" />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/journal" element={<Journal />} />
+          <Route path="/schedule-appointment" element={<ScheduleAppointment />} /> {/* Add the new route */}
+          <Route path="/beauty-services" element={<BeautyServices />} />
         </Routes>
       </div>
     </Router>

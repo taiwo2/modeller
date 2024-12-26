@@ -1,11 +1,12 @@
 // Modal.jsx
 import React, { useState, useEffect } from 'react';
 import { FaSearch, FaTrash } from 'react-icons/fa';
-
+import { useNavigate } from 'react-router-dom';
 const Modal = ({ isOpen, onClose, initialService, services }) => {
   const [isAddingService, setIsAddingService] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedServices, setSelectedServices] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (initialService) {
@@ -29,6 +30,9 @@ const Modal = ({ isOpen, onClose, initialService, services }) => {
     setSelectedServices(updatedServices);
   };
 
+  const handleScheduleClick = () => {
+    navigate('/schedule-appointment');
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white w-full max-w-2xl h-full mx-4 md:mx-0 p-6 rounded-lg shadow-lg overflow-y-auto">
@@ -62,7 +66,9 @@ const Modal = ({ isOpen, onClose, initialService, services }) => {
                 </button>
               </div>
             </div>
-            <button className="w-full bg-black text-white py-3 border-t border-gray-300 mt-6">
+            <button 
+            onClick={handleScheduleClick}
+            className="w-full bg-black text-white py-3 border-t border-gray-300 mt-6">
               Schedule Appointment
             </button>
           </div>
