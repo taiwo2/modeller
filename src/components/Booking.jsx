@@ -57,7 +57,8 @@ const Booking = () => {
     },
   ];
 
-  const handleBookNowClick = () => {
+  const handleBookNowClick = (service) => {
+    setInitialService(service);
     setIsModalOpen(true);
   };
 
@@ -88,7 +89,7 @@ const Booking = () => {
             <p className="text-gray-100 font-bold">{service.duration}</p>
             <p className="text-gray-100 font-bold mb-4">{service.price}</p>
             <button
-              onClick={handleBookNowClick}
+              onClick={() => handleBookNowClick(service)}
               className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors duration-300"
             >
               Book Now
@@ -96,7 +97,11 @@ const Booking = () => {
           </div>
         ))}
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleCloseClick} initialService={initialService} services={services}/>
+      <Modal isOpen={isModalOpen} 
+        onClose={handleCloseClick} 
+        initialService={initialService} 
+        services={services}
+      />
       <ConfirmationModal
         isOpen={isConfirmationOpen}
         onClose={() => setIsConfirmationOpen(false)}

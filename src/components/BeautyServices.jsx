@@ -12,28 +12,20 @@ const BeautyServices = () => {
           <p className="mb-4">
             Professional make up services that are specially curated to make women feel and look elegant to events. Focused on achieving a luxurious and flawless skin finish with eyes and lips crafted to meet client’s desires and preferences.
           </p>
-          <div className="mb-4">
-            <h3 className="font-semibold">SOFT GLAM (IN STUDIO):</h3>
-            <p>Our signature soft glam looks; best for event guests, graduates, date nights etc.</p>
-            <p className="font-bold">$180</p>
+          <div className="mb-4 border-b pb-4">
+            <h3 className="font-semibold">SOFT GLAM (IN-STUDIO) - $180</h3>
+            <p>Our signature soft glam looks; best for event guests, graduates, date nights e.t.c.</p>
+            <p className="text-sm mt-2">PS: If this booking is for your wedding book from the “bridal sessions” selection and not this one. This booking is closed to brides.</p>
           </div>
-          <div className="mb-4">
-            <h3 className="font-semibold">CELEBRATIONS GLAM (IN STUDIO):</h3>
+          <div className="mb-4 border-b pb-4">
+            <h3 className="font-semibold">CELEBRATIONS GLAM (IN-STUDIO) - $200</h3>
             <p>Red-carpet worthy glam looks. Best for photoshoots and celebrants. NON-BRIDAL</p>
-            <p className="font-bold">$200</p>
+            <p className="text-sm mt-2">NB: If this booking is for your wedding book from the “bridal sessions” selection and not this one. This booking is closed to brides.</p>
           </div>
-          <div className="mb-4">
-            <h3 className="font-semibold">GLAM SESSION OUTSIDE OUR STUDIO:</h3>
+          <div className="mb-4 border-b pb-4">
+            <h3 className="font-semibold">GLAM SESSION OUTSIDE OUR STUDIO</h3>
             <p>Non-bridal make up application at the comfort of your location.</p>
-            <p className="font-bold">From $220</p>
-            <ul className="list-disc ml-6">
-              <li>NE/NW (0-5KM FROM LIVINGSTON) $220</li>
-              <li>NE/NW (5-10KM FROM LIVINGSTON) $250</li>
-              <li>NE/NW (10-15KM FROM LIVINGSTON) $280</li>
-              <li>NE/NW (15-20KM FROM LIVINGSTON) $300</li>
-              <li>DOWNTOWN CALGARY $300</li>
-              <li>SW, SE & DEEP SOUTH CALGARY $350</li>
-            </ul>
+            <p className="text-sm mt-2">PS: If this booking is for your wedding book from the “bridal sessions” selection and not this one. This booking is closed to brides.</p>
           </div>
         </div>
 
@@ -42,21 +34,15 @@ const BeautyServices = () => {
           <p className="mb-4">
             A special service curated to make brides feel and look elegant. Creating a luxurious, fresh, long lasting and flawless skin finish with eyes and lips crafted to meet your desires.
           </p>
-          <div className="mb-4">
-            <h3 className="font-semibold">CALGARY WEDDINGS:</h3>
+          <div className="mb-4 border-b pb-4">
+            <h3 className="font-semibold">CALGARY WEDDINGS - $750</h3>
             <p>Location: Anywhere in Calgary</p>
-            <p className="font-bold">$750</p>
+            <p className="text-sm mt-2">Bonus: Free bridal consultation(s), touch up kit, eye brow grooming, free false lash extensions & 20% off makeup for others in your bridal party including bridesmaids, parents and other guests (T&Cs apply).</p>
           </div>
-          <div className="mb-4">
-            <h3 className="font-semibold">WEDDINGS OUTSIDE CALGARY:</h3>
-            <p>If you are getting married outside Calgary, please send me an email to get a quote.</p>
+          <div className="mb-4 border-b pb-4">
+            <h3 className="font-semibold">WEDDINGS OUTSIDE CALGARY</h3>
+            <p>If you are getting married outside Calgary, please send me an email at tolabanksbeauty@gmail.com, send a message on Instagram or WhatsApp/text me on +5875743180 to get a quote.</p>
             <p className="font-bold">From $1,100</p>
-          </div>
-          <div className="mb-4">
-            <h3 className="font-semibold">HEAD GEAR STYLING (GELE):</h3>
-            <p>Gele tying for party guests and celebrants.</p>
-            <p className="font-bold">$50</p>
-            <p className="font-bold">$100</p>
           </div>
         </div>
       </div>

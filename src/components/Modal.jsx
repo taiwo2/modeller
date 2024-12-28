@@ -30,8 +30,31 @@ const Modal = ({ isOpen, onClose, initialService, services }) => {
     setSelectedServices(updatedServices);
   };
 
+  const calculateTotalDuration = (services) => {
+    let totalMinutes = 0;
+    services.forEach(service => {
+      const durationParts = service.duration.split(' ');
+      durationParts.forEach((part, index) => {
+        if (part.includes('hr')) {
+          totalMinutes += parseInt(durationParts[index - 1]) * 60;
+        } else if (part.includes('min')) {
+          totalMinutes += parseInt(durationParts[index - 1]);
+        }
+      });
+    });
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours} hr ${minutes} min`;
+  };
+
   const handleScheduleClick = () => {
-    navigate('/schedule-appointment');
+    const totalDuration = calculateTotalDuration(selectedServices);
+    navigate('/schedule-appointment', { 
+      state: { 
+        selectedServices,
+        totalDuration
+      } 
+    });
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
