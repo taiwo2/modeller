@@ -15,8 +15,10 @@
     "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^11.15.0",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.30.1",

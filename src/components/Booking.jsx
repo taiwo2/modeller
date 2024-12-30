@@ -1,16 +1,17 @@
 // Booking.jsx
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { FaBars, FaChevronDown } from 'react-icons/fa';
 import Modal from './Modal';
 import ConfirmationModal from './ConfirmationModal';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const Booking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const [initialService, setInitialService] = useState(null);
-
-
+  const [initialServices, setInitialServices] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const services = [
     {
@@ -56,9 +57,14 @@ const Booking = () => {
       image: "https://static.wixstatic.com/media/ecdce6_2928723aa58145aebce9262bb9637bf6~mv2.jpg/v1/fill/w_163,h_164,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01,enc_auto/ecdce6_2928723aa58145aebce9262bb9637bf6~mv2.jpg",
     },
   ];
-
+  useEffect(() => {
+    if (location.state?.editMode) {
+      setIsModalOpen(true);
+      setInitialServices(location.state.selectedServices);
+    }
+  }, [location]);
   const handleBookNowClick = (service) => {
-    setInitialService(service);
+    setInitialServices([service]);
     setIsModalOpen(true);
   };
 
@@ -66,9 +72,19 @@ const Booking = () => {
     setIsConfirmationOpen(true);
   };
 
+  
   const handleLeaveBooking = () => {
     setIsConfirmationOpen(false);
     setIsModalOpen(false);
+  };
+  const handleScheduleClick = (selectedServices, totalDuration) => {
+    navigate('/schedule-appointment', { 
+      state: { 
+        selectedServices,
+        totalDuration,
+        services // Pass all services
+      } 
+    });
   };
   return (
     <section className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-16">
@@ -99,8 +115,9 @@ const Booking = () => {
       </div>
       <Modal isOpen={isModalOpen} 
         onClose={handleCloseClick} 
-        initialService={initialService} 
+        initialServices={initialServices} 
         services={services}
+        onSchedule={handleScheduleClick}
       />
       <ConfirmationModal
         isOpen={isConfirmationOpen}

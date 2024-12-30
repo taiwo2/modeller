@@ -3,18 +3,34 @@ import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { FaEdit } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate  } from 'react-router-dom';
+import Modal from './Modal';
+import emailjs from 'emailjs-com';
+import DetailModal from './DetailModal'
 
 const localizer = momentLocalizer(moment);
 
 const ScheduleAppointment = () => {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
-  const { selectedServices, totalDuration } = location.state || { selectedServices: [], totalDuration: 0 };
+  const navigate = useNavigate();
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [selectedServices, setSelectedServices] = useState(location.state?.selectedServices || []);
+  const [totalDuration, setTotalDuration] = useState(location.state?.totalDuration || '0 hr 0 min');
+  // const { selectedServices, totalDuration } = location.state || { selectedServices: [], totalDuration: 0 };
 
   const events = [
     // Add your events here
   ];
+
+  const handleNextClick = () => {
+    if (selectedDate) {
+      setIsConfirmationModalOpen(true);
+    } else {
+      alert('Please select a date and time before proceeding.');
+    }
+  };
 
   const handleSelectSlot = useCallback(
     ({ start }) => {
@@ -51,8 +67,51 @@ const ScheduleAppointment = () => {
     return events;
   }, []);
   const handleEditClick = () => {
-    navigate('/', { state: { editMode: true, selectedServices } });
+    setIsModalOpen(true);
   };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleScheduleUpdate = (updatedServices, updatedDuration) => {
+    setSelectedServices(updatedServices);
+    setTotalDuration(updatedDuration);
+    setIsModalOpen(false);
+  };
+
+  const handleConfirmationSubmit = (email, depositAmount) => {
+    // Here you would typically handle the booking confirmation logic
+    console.log('Booking confirmed:', { email, depositAmount, selectedDate, selectedServices });
+    alert('Booking confirmed! Check console for details.');
+    setIsConfirmationModalOpen(false);
+    // Navigate to a confirmation page or handle as needed
+  };
+
+
+const handleConfirmationSub = async (email, depositAmount) => {
+  try {
+    const templateParams = {
+      to_email: email,
+      to_name: "Customer",
+      from_name: "Your Business",
+      message: `Booking confirmed for ${selectedServices.map(s => s.title).join(', ')} on ${moment(selectedDate).format('MMMM D, YYYY')} at ${moment(selectedDate).format('h:mm A')}. Deposit amount: $${depositAmount}`,
+    };
+
+    await emailjs.send(
+      'YOUR_SERVICE_ID',
+      'YOUR_TEMPLATE_ID',
+      templateParams,
+      'YOUR_USER_ID'
+    );
+
+    alert('Booking confirmed! Confirmation email sent.');
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to send confirmation. Please try again.');
+  }
+};
+
   return (
     <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-4">Schedule your appointment</h1>
@@ -138,9 +197,26 @@ const ScheduleAppointment = () => {
               </button>
             </div>
           </div>
-          <button className="bg-gray-800 text-white px-4 py-2 w-full">Next</button>
+          <button 
+            onClick={handleNextClick}
+            className="bg-gray-800 text-white px-4 py-2 w-full">Next</button>
         </div>
       </div>
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal} 
+        initialServices={selectedServices} 
+        services={location.state?.services || []}
+        onSchedule={handleScheduleUpdate}
+      />
+        <DetailModal
+          isOpen={isConfirmationModalOpen}
+          onClose={() => setIsConfirmationModalOpen(false)}
+          selectedDate={selectedDate}
+          selectedServices={selectedServices}
+          totalDuration={totalDuration}
+          onSubmit={handleConfirmationSubmit}
+      />
     </div>
   );
 };

@@ -2,17 +2,23 @@
 import React, { useState, useEffect } from 'react';
 import { FaSearch, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-const Modal = ({ isOpen, onClose, initialService, services }) => {
+const Modal = ({ isOpen, onClose, initialServices, services, onSchedule }) => {
   const [isAddingService, setIsAddingService] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedServices, setSelectedServices] = useState([]);
+  // const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState(initialServices || []);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   if (initialServices) {
+  //     setSelectedServices([initialServices]);
+  //   }
+  // }, [initialServices]);
   useEffect(() => {
-    if (initialService) {
-      setSelectedServices([initialService]);
+    if (initialServices && initialServices.length > 0) {
+      setSelectedServices(initialServices);
     }
-  }, [initialService]);
+  }, [initialServices]);
 
   if (!isOpen) return null;
 
@@ -49,12 +55,7 @@ const Modal = ({ isOpen, onClose, initialService, services }) => {
 
   const handleScheduleClick = () => {
     const totalDuration = calculateTotalDuration(selectedServices);
-    navigate('/schedule-appointment', { 
-      state: { 
-        selectedServices,
-        totalDuration
-      } 
-    });
+    onSchedule(selectedServices, totalDuration);
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
