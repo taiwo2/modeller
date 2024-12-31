@@ -21,14 +21,14 @@ const ScrollToTop = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
   return (
     <>
       {isVisible && (
-        <div 
+        <div
           onClick={scrollToTop}
           style={{
             position: 'fixed',

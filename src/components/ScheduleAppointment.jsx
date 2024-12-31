@@ -3,10 +3,10 @@ import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { FaEdit } from 'react-icons/fa';
-import { useLocation, useNavigate  } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from './Modal';
-import emailjs from 'emailjs-com';
-import DetailModal from './DetailModal'
+import emailjs from '@emailjs/browser';
+import DetailModal from './DetailModal';
 
 const localizer = momentLocalizer(moment);
 
@@ -32,24 +32,18 @@ const ScheduleAppointment = () => {
     }
   };
 
-  const handleSelectSlot = useCallback(
-    ({ start }) => {
-      setSelectedDate(start);
-    },
-    []
-  );
+  const handleSelectSlot = useCallback(({ start }) => {
+    setSelectedDate(start);
+  }, []);
 
-  const handleSelectEvent = useCallback(
-    (event) => {
-      setSelectedDate(event.start);
-    },
-    []
-  );
+  const handleSelectEvent = useCallback((event) => {
+    setSelectedDate(event.start);
+  }, []);
 
   const minTime = new Date();
-  minTime.setHours(9,0,0);
+  minTime.setHours(9, 0, 0);
   const maxTime = new Date();
-  maxTime.setHours(16,0,0);
+  maxTime.setHours(16, 0, 0);
 
   // Generate events for each day
   const generateDayEvents = useCallback(() => {
@@ -88,35 +82,81 @@ const ScheduleAppointment = () => {
     // Navigate to a confirmation page or handle as needed
   };
 
+  // const handleConfirmationSub = async (fullName, email, depositAmount) => {
+  //   try {
+  //     const templateParams = {
+  //       to_email: email,
+  //       to_name: fullName,
+  //       from_name: fullName,  // Changed this line to use the user's full name
+  //       from_email: email,
+  //       message: `Booking confirmed for ${selectedServices.map(s => s.title).join(', ')} on ${moment(selectedDate).format('MMMM D, YYYY')} at ${moment(selectedDate).format('h:mm A')}. Deposit amount: $${depositAmount} ${email}`,
+  //     };
 
-const handleConfirmationSub = async (email, depositAmount) => {
-  try {
-    const templateParams = {
-      to_email: email,
-      to_name: "Customer",
-      from_name: "Your Business",
-      message: `Booking confirmed for ${selectedServices.map(s => s.title).join(', ')} on ${moment(selectedDate).format('MMMM D, YYYY')} at ${moment(selectedDate).format('h:mm A')}. Deposit amount: $${depositAmount}`,
-    };
+  //     await emailjs.send(
+  //       'service_3xo2yy3',
+  //       'template_fl49sd8',
+  //       templateParams,
+  //       'ZdF0n59OwPqckARxj'
+  //     );
 
-    await emailjs.send(
-      'YOUR_SERVICE_ID',
-      'YOUR_TEMPLATE_ID',
-      templateParams,
-      'YOUR_USER_ID'
-    );
+  //     alert('Booking confirmed! Confirmation email sent.');
+  //     setIsConfirmationModalOpen(false);
+  //   // Navigate to a confirmation page or handle as needed
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     alert('Failed to send confirmation. Please try again.');
+  //   }
+  // };
 
-    alert('Booking confirmed! Confirmation email sent.');
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Failed to send confirmation. Please try again.');
-  }
-};
+  const handleConfirmationSub = async (fullName, email, depositAmount) => {
+    try {
+      const templateParams = {
+        to_email: email,
+        to_name: fullName,
+        from_name: fullName,
+        message: `
+  Dear Taiwo,
+  
+  Your booking has been confirmed!
+  
+  Details:
+  - Services: ${selectedServices.map((s) => s.title).join(', ')}
+  - Date: ${moment(selectedDate).format('MMMM D, YYYY')}
+  - Time: ${moment(selectedDate).format('h:mm A')}
+  - Deposit amount: $${depositAmount}
+  
+  Contact email: ${email}
+  
+        `,
+      };
+
+      await emailjs.send(
+        'service_3xo2yy3',
+        'template_fl49sd8',
+        templateParams,
+        'ZdF0n59OwPqckARxj'
+      );
+
+      alert('Booking confirmed! Confirmation email sent.');
+      setIsConfirmationModalOpen(false);
+
+      // Navigate to home after 3 seconds
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to send confirmation. Please try again.');
+    }
+  };
 
   return (
     <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-4">Schedule your appointment</h1>
-      <p className="mb-8">Check out our availability and book the date and time that works for you</p>
-      
+      <p className="mb-8">
+        Check out our availability and book the date and time that works for you
+      </p>
+
       <div className="flex flex-col md:flex-row justify-between">
         <div className="flex-1 md:mr-8">
           {!selectedDate ? (
@@ -134,7 +174,7 @@ const handleConfirmationSub = async (email, depositAmount) => {
             />
           ) : (
             <div>
-              <button 
+              <button
                 onClick={() => setSelectedDate(null)}
                 className="mb-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
               >
@@ -165,11 +205,13 @@ const handleConfirmationSub = async (email, depositAmount) => {
             <h2 className="text-xl font-semibold mb-2">Selected Date and Time</h2>
             <p>Date: {moment(selectedDate).format('MMMM D, YYYY')}</p>
             <p>Time: {moment(selectedDate).format('h:mm A')}</p>
-            <button 
+            <button
               className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
               onClick={() => {
                 // Here you would typically handle the booking logic
-                alert('Booking confirmed for ' + moment(selectedDate).format('MMMM D, YYYY h:mm A'));
+                alert(
+                  'Booking confirmed for ' + moment(selectedDate).format('MMMM D, YYYY h:mm A')
+                );
               }}
             >
               Confirm Booking
@@ -189,33 +231,30 @@ const handleConfirmationSub = async (email, depositAmount) => {
                   <p key={index}>{service.title}</p>
                 ))}
               </div>
-              <button 
-               onClick={handleEditClick}
-                className="flex items-center text-sm"
-              >
+              <button onClick={handleEditClick} className="flex items-center text-sm">
                 <FaEdit className="mr-1" /> Edit
               </button>
             </div>
           </div>
-          <button 
-            onClick={handleNextClick}
-            className="bg-gray-800 text-white px-4 py-2 w-full">Next</button>
+          <button onClick={handleNextClick} className="bg-gray-800 text-white px-4 py-2 w-full">
+            Next
+          </button>
         </div>
       </div>
-      <Modal 
-        isOpen={isModalOpen} 
-        onClose={handleCloseModal} 
-        initialServices={selectedServices} 
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        initialServices={selectedServices}
         services={location.state?.services || []}
         onSchedule={handleScheduleUpdate}
       />
-        <DetailModal
-          isOpen={isConfirmationModalOpen}
-          onClose={() => setIsConfirmationModalOpen(false)}
-          selectedDate={selectedDate}
-          selectedServices={selectedServices}
-          totalDuration={totalDuration}
-          onSubmit={handleConfirmationSubmit}
+      <DetailModal
+        isOpen={isConfirmationModalOpen}
+        onClose={() => setIsConfirmationModalOpen(false)}
+        selectedDate={selectedDate}
+        selectedServices={selectedServices}
+        totalDuration={totalDuration}
+        onSubmit={handleConfirmationSub}
       />
     </div>
   );

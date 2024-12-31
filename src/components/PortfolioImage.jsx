@@ -1,8 +1,8 @@
 // PortfolioImage.jsx
-import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
 
 const PortfolioImage = ({ src, alt, index, portfolioType }) => {
   const [ref, inView] = useInView({

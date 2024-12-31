@@ -22,7 +22,7 @@ const Modal = ({ isOpen, onClose, initialServices, services, onSchedule }) => {
 
   if (!isOpen) return null;
 
-  const filteredServices = services.filter(service =>
+  const filteredServices = services.filter((service) =>
     service.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -38,7 +38,7 @@ const Modal = ({ isOpen, onClose, initialServices, services, onSchedule }) => {
 
   const calculateTotalDuration = (services) => {
     let totalMinutes = 0;
-    services.forEach(service => {
+    services.forEach((service) => {
       const durationParts = service.duration.split(' ');
       durationParts.forEach((part, index) => {
         if (part.includes('hr')) {
@@ -65,7 +65,9 @@ const Modal = ({ isOpen, onClose, initialServices, services, onSchedule }) => {
             <div>
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-bold">Appointment Summary</h2>
-                <button onClick={onClose} className="text-black text-2xl">&times;</button>
+                <button onClick={onClose} className="text-black text-2xl">
+                  &times;
+                </button>
               </div>
               <div className="mb-6">
                 {selectedServices.map((service, index) => (
@@ -90,9 +92,10 @@ const Modal = ({ isOpen, onClose, initialServices, services, onSchedule }) => {
                 </button>
               </div>
             </div>
-            <button 
-            onClick={handleScheduleClick}
-            className="w-full bg-black text-white py-3 border-t border-gray-300 mt-6">
+            <button
+              onClick={handleScheduleClick}
+              className="w-full bg-black text-white py-3 border-t border-gray-300 mt-6"
+            >
               Schedule Appointment
             </button>
           </div>
@@ -101,7 +104,9 @@ const Modal = ({ isOpen, onClose, initialServices, services, onSchedule }) => {
             <div>
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-bold">Add to your appointment</h2>
-                <button onClick={onClose} className="text-black text-2xl">&times;</button>
+                <button onClick={onClose} className="text-black text-2xl">
+                  &times;
+                </button>
               </div>
               <div className="mb-6">
                 <div className="relative mb-4">
@@ -127,10 +132,7 @@ const Modal = ({ isOpen, onClose, initialServices, services, onSchedule }) => {
                 ))}
               </div>
             </div>
-            <button
-              onClick={() => setIsAddingService(false)}
-              className="text-left text-black mt-4"
-            >
+            <button onClick={() => setIsAddingService(false)} className="text-left text-black mt-4">
               &larr; Back
             </button>
           </div>

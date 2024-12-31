@@ -1,5 +1,5 @@
 // ImageSlider.jsx
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { FaExpand, FaCompress, FaArrowLeft } from 'react-icons/fa';
@@ -7,7 +7,6 @@ import { images as portfolio3Images } from './Portfolio3';
 import { images as portfolio2Images } from './Gallery';
 import { images as portfolio4Images } from './AdditionalPortfolio';
 import { images as portfolioImages } from './Portfolio';
-
 
 const ImageSlider = ({ portfolioType }) => {
   const { imageIndex } = useParams();
@@ -83,21 +82,19 @@ const ImageSlider = ({ portfolioType }) => {
       >
         <FaArrowLeft />
       </button>
-      <button 
-        onClick={closeSlider} 
+      <button
+        onClick={closeSlider}
         className="absolute top-4 right-4 text-black text-3xl z-60 hidden md:block"
       >
         &times;
       </button>
       <button
-  onClick={toggleFullScreen}
-  className="absolute top-4 left-4 text-black text-2xl z-60 hidden md:block"
->
-  {isFullScreen ? <FaCompress /> : <FaExpand />}
-</button>
-      <motion.div
-        className="relative w-full max-w-4xl h-[90vh] flex items-center justify-center"
+        onClick={toggleFullScreen}
+        className="absolute top-4 left-4 text-black text-2xl z-60 hidden md:block"
       >
+        {isFullScreen ? <FaCompress /> : <FaExpand />}
+      </button>
+      <motion.div className="relative w-full max-w-4xl h-[90vh] flex items-center justify-center">
         <AnimatePresence initial={false} custom={direction}>
           <motion.img
             key={currentIndex}
@@ -108,7 +105,7 @@ const ImageSlider = ({ portfolioType }) => {
             animate="center"
             exit="exit"
             transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
+              x: { type: 'spring', stiffness: 300, damping: 30 },
               opacity: { duration: 0.2 },
             }}
             drag="x"
@@ -152,5 +149,3 @@ const ImageSlider = ({ portfolioType }) => {
 };
 
 export default ImageSlider;
-
-

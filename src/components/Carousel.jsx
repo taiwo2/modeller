@@ -1,6 +1,5 @@
-import React from "react";
-import Slider from "react-slick";
-
+import React from 'react';
+import Slider from 'react-slick';
 
 const Slide = ({ src, alt }) => (
   <div>
@@ -20,9 +19,9 @@ const Carousel = () => {
   };
 
   const slides = [
-    { src: "https://via.placeholder.com/800x600", alt: "A placeholder image for slide 1" },
-    { src: "https://via.placeholder.com/800x600", alt: "A placeholder image for slide 2" },
-    { src: "https://via.placeholder.com/800x600", alt: "A placeholder image for slide 3" },
+    { src: 'https://via.placeholder.com/800x600', alt: 'A placeholder image for slide 1' },
+    { src: 'https://via.placeholder.com/800x600', alt: 'A placeholder image for slide 2' },
+    { src: 'https://via.placeholder.com/800x600', alt: 'A placeholder image for slide 3' },
   ];
 
   return (
