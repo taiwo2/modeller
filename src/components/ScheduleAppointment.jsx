@@ -111,11 +111,11 @@ const ScheduleAppointment = () => {
   const handleConfirmationSub = async (fullName, email, depositAmount) => {
     try {
       const templateParams = {
-        to_email: email,
+        user_email: email,
         to_name: fullName,
         from_name: fullName,
+        reply_to: email,
         message: `
-  Dear Taiwo,
   
   Your booking has been confirmed!
   
@@ -124,9 +124,7 @@ const ScheduleAppointment = () => {
   - Date: ${moment(selectedDate).format('MMMM D, YYYY')}
   - Time: ${moment(selectedDate).format('h:mm A')}
   - Deposit amount: $${depositAmount}
-  
-  Contact email: ${email}
-  
+    
         `,
       };
 

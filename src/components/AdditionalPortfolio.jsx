@@ -1,7 +1,8 @@
 // Portfolio.jsx
-import React from 'react';
+import React, {useState} from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
+import { FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import PortfolioImage from './PortfolioImage';
 
@@ -40,6 +41,15 @@ export const images = [
   'https://static.wixstatic.com/media/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg/v1/fill/w_161,h_162,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01,enc_auto/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg',
 ];
 const Portfolio = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const handleBookUsClick = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate('/booking');
+    }, 3000); // 3 seconds delay
+  };
   return (
     <section className="pb-4 bg-gradient-to-b from-gray-100 to-white">
       <div className="container mx-auto flex flex-col md:flex-row gap-4 px-4">
@@ -76,8 +86,19 @@ const Portfolio = () => {
         </div>
       </div>
       <div className="w-full h-[300px] flex justify-center items-center mt-8">
-        <button className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors duration-300">
-          Book a Service
+        <button
+          onClick={handleBookUsClick}
+          disabled={isLoading}
+          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors duration-300"
+        >
+          {isLoading ? (
+            <>
+              <FaSpinner className="animate-spin mr-2" />
+              Loading...
+            </>
+          ) : (
+            'Book a Service'
+          )}
         </button>
       </div>
     </section>

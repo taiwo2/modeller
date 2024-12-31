@@ -1,63 +1,15 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
+import Modal from './Modal';
+import ConfirmationModal from './ConfirmationModal';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {services} from './service'
 
-const services = [
-  {
-    title: 'PICTURE-PERFECT GLAM (IN-STUDIO)',
-    description: 'Red-Carpet worthy glam looks. Best for photoshoots and celebrants. NON-BRIDAL',
-    duration: '1 hr 30 min',
-    price: '$200',
-    image:
-      'https://static.wixstatic.com/media/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg/v1/fill/w_161,h_162,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01,enc_auto/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg',
-  },
-  {
-    title: 'SOFT GLAM (IN-STUDIO)',
-    description:
-      'Our signature glam looks; best for event guests, graduands, date nights etc. NON-BRIDAL',
-    duration: '1 hr 30 min',
-    price: '$180',
-    image:
-      'https://static.wixstatic.com/media/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg/v1/fill/w_161,h_162,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01,enc_auto/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg',
-  },
-  {
-    title: 'GLAM SESSION OUTSIDE OUR STUDIO',
-    description: 'Non-bridal makeup at the comfort of any location you want.',
-    duration: '1 hr 30 min',
-    price: 'From $240',
-    image:
-      'https://static.wixstatic.com/media/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg/v1/fill/w_161,h_162,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01,enc_auto/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg',
-  },
-  {
-    title: 'GLAM SESSION OUTSIDE OUR STUDIO',
-    description: 'Non-bridal makeup at the comfort of any location you want.',
-    duration: '1 hr 30 min',
-    price: 'From $240',
-    image:
-      'https://static.wixstatic.com/media/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg/v1/fill/w_161,h_162,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01,enc_auto/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg',
-  },
-  {
-    title: 'GLAM SESSION OUTSIDE OUR STUDIO',
-    description: 'Non-bridal makeup at the comfort of any location you want.',
-    duration: '1 hr 30 min',
-    price: 'From $240',
-    image:
-      'https://static.wixstatic.com/media/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg/v1/fill/w_161,h_162,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01,enc_auto/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg',
-  },
-  {
-    title: 'GLAM SESSION OUTSIDE OUR STUDIO',
-    description: 'Non-bridal makeup at the comfort of any location you want.',
-    duration: '1 hr 30 min',
-    price: 'From $240',
-    image:
-      'https://static.wixstatic.com/media/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg/v1/fill/w_161,h_162,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01,enc_auto/ecdce6_24f37a26e7ac43f99e02275e93aa7c41~mv2.jpg',
-  },
-];
 
-const ServiceCard = ({ service, index }) => {
+const ServiceCard = ({ service, index, onBookNow }) => {
   const [ref, inView] = useInView({
     threshold: 0.2,
-    // triggerOnce: true,
   });
 
   return (
@@ -81,12 +33,53 @@ const ServiceCard = ({ service, index }) => {
         <p className="mb-4">{service.price}</p>
       </div>
 
-      <button className="bg-black text-white py-2 px-4 rounded">Book Now</button>
+      <button 
+        onClick={() => onBookNow(service)}
+        className="bg-black text-white py-2 px-4 rounded">
+        Book Now
+      </button>
     </motion.div>
   );
 };
 
 const Services = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [initialServices, setInitialServices] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.editMode) {
+      setIsModalOpen(true);
+      setInitialServices(location.state.selectedServices);
+    }
+  }, [location]);
+
+  const handleBookNowClick = (service) => {
+    setInitialServices([service]);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseClick = () => {
+    setIsConfirmationOpen(true);
+  };
+
+  const handleLeaveBooking = () => {
+    setIsConfirmationOpen(false);
+    setIsModalOpen(false);
+  };
+
+  const handleScheduleClick = (selectedServices, totalDuration) => {
+    navigate('/schedule-appointment', {
+      state: {
+        selectedServices,
+        totalDuration,
+        services, // Pass all services
+      },
+    });
+  };
+
   return (
     <section className="py-16 bg-gray-100">
       <div className="container mx-auto text-center mb-8">
@@ -94,9 +87,26 @@ const Services = () => {
       </div>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {services.map((service, index) => (
-          <ServiceCard key={index} service={service} index={index} />
+          <ServiceCard 
+            key={index} 
+            service={service} 
+            index={index} 
+            onBookNow={handleBookNowClick}
+          />
         ))}
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseClick}
+        initialServices={initialServices}
+        services={services}
+        onSchedule={handleScheduleClick}
+      />
+      <ConfirmationModal
+        isOpen={isConfirmationOpen}
+        onClose={() => setIsConfirmationOpen(false)}
+        onLeave={handleLeaveBooking}
+      />
     </section>
   );
 };
